@@ -84,4 +84,3 @@ STARTTLS supported. Initiating handshake...
 ## License
 
 This project is licensed under the MIT License.
-```
