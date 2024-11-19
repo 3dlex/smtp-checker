@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMTP Checker</title>
+    <script>
+        // JavaScript function to reset form and clear results
+        function resetForm() {
+            document.getElementById("domain").value = "";
+            document.getElementById("show_errors").checked = false;
+
+            const errorElement = document.getElementById("error");
+            const resultsElement = document.getElementById("results");
+
+            if (errorElement) errorElement.innerHTML = "";
+            if (resultsElement) resultsElement.innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>SMTP Checker</h1>
+    <form method="POST" action="/">
+        <label for="domain">Enter Domain:</label>
+        <input type="text" id="domain" name="domain" required>
+        <br>
+        <label for="show_errors">
+            <input type="checkbox" id="show_errors" name="show_errors"> Show detailed output
+        </label>
+        <br>
+        <button type="submit">Check</button>
+        <button type="button" onclick="resetForm()">Reset</button>
+    </form>
+
+    {% if error %}
+        <p id="error" style="color: red;">{{ error }}</p>
+    {% else %}
+        <p id="error" style="color: red;"></p>
+    {% endif %}
+
+    {% if results %}
+        <div id="results">
+            <h2>Results for {{ domain }}</h2>
+            <ul>
+            {% for host, result in results.items() %}
+                <li><strong>{{ host }}</strong>:
+                    <ul>
+                    {% for check, status in result.items() %}
+                        {% if check != 'Details' %}
+                            <li>{{ check }}: {{ status }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if 'Details' in result %}
+                        <li><strong>Details:</strong></li>
+                        <ul>
+                        {% for detail_key, detail_value in result['Details'].items() %}
+                            <li>{{ detail_key }}: {{ detail_value }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div id="results"></div>
+    {% endif %}
+</body>
+</html>
