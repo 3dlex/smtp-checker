@@ -1,5 +1,3 @@
-Certainly! Below is the complete content for your `README.md` file, formatted correctly:
-
 ```markdown
 # SMTP Checker
 
