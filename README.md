@@ -1,7 +1,3 @@
-Here's how you can update the `README.md` file in the `docker` branch to include information about using Docker for your project:
-
----
-
 ### Updated `README.md`
 
 ```markdown
